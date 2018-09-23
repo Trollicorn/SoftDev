@@ -4,6 +4,9 @@
 		<title> {{title }} </title>
 	</head>
 	<body>
+		<h> This is a table containing information about occupations in the United States </h> <br><br>	
+		<p> Random Job Class (Unweighted): {{randJob["Job Class"]}}</p> 
+		<p> Percentage: {{randJob["Percentage"]}}</p> <br>
 		<table border="1"> 
 		<tr><th>Job Class</th> <th>Percentage</th></tr>
 		{% for job in occupations %}
