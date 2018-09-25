@@ -1,49 +1,34 @@
-#MmmmmChocolate -- Mohammed Uddin and Britni Canale
-#SoftDev1 pd6
-#K 10 Jinja Tuning
-#2018-9-22
+'''
+MmmmmmChocolate-Britni Canale & Mohammed Uddin
+SoftDev1 pd6
+K10 -- Jinja Tuning
+2018-09-22
+'''
 
-import random
-import csv
 
 from flask import Flask, render_template
+import util.occupations as occupations
+
 
 app = Flask(__name__)
 
 
-occs = {}
+#---------FLASK stuff, where the app routes are and the above functions are called---------
 
 
-def getOcc(filename):
-    f = open(filename, 'r')                                                      
-    lineSeparated = csv.reader(f) 
-    for line in lineSeparated:
-        if line[0] == 'Job Class': #exception for first, doesn't store value as float, used for heading of table
-            key = line[0]
-            val = line[1]
-            occs[key] = val
-        else:
-            key = line[0]
-            percent = float(line[1])
-            occs[key] = percent
-
-def getRandOcc():  #returns a random occupation
-    randList = list(occs.keys())
-    randList.pop(0)
-    randList.pop()
-    return random.choice(randList)
-
-@app.route("/")
+@app.route("/")                                 #home route, includes link to occupations route for convenience
 def hello_world():
     return "This is the home page<br><a href = \"/occupations\"> Here </a> is a link to a page with information regarding occupations"
 
-@app.route("/occupations")
+@app.route("/occupations")                      #occupations route, contains info regarding some occupations in the US
 def hello_temp():
-    getOcc("data/occupations.csv") #calls function that created dictionary out of the csv file
-    return render_template("temp.html", ttl = "Occupations in the United States", rand = getRandOcc(), dict = occs, header = 'Job Class', footer = 'Total')
-#                          filename     title of page                             random occupation    dictionary of occupations
+    occs = occupations.getOcc("data/occupations.csv")  #calls function that created dictionary out of the csv file
+    return render_template("temp.html", ttl = "Occupations in the United States", rand = occupations.getRandOcc(occs), dict = occs, header = 'Job Class', footer = 'Total')
+#                          filename     title of page                             random occupation                    dictionary of occupations 
 
 
+
+#----------Where the app is ran-----------
 if __name__ == "__main__":
     app.debug = True
     app.run()

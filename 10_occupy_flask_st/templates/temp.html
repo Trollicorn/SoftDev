@@ -1,23 +1,43 @@
 <!DOCTYPE>
+
 <html>
-  <title> {{ttl}} </title>
+
+  <head>
+    <title> {{ttl}} </title>
+  </head>
+ 
   <body>
-    <h1> This webpage contains information about {{ttl}}</h1>
-    <p>  {{rand}} </p>
+
+    <h1> This webpage contains information about {{ttl}}</h1> <!-- heading -->
+
+    <p>  {{rand}} </p>                                     <!-- random job -->
+
     <table border="1">
+
       {%for item in dict%}
-      {%if item == header or item == footer%}
-      <tr>
-	<th> {{item}} </th>
-	<th> {{dict[item]}} </th>
-      </tr>
-      {%else%}
-      <tr>
-	<td> {{item}} </td>
-	<td> {{dict[item]}} </td>
-      </tr>
-      {%endif%}
+
+        {%if item == header or item == footer%}      <!-- if metadata, use table headings -->
+
+          <tr> <th> {{item}} </th>
+
+               <th> {{dict[item]}} </th>
+
+          </tr>
+
+        {%else%}
+
+          <tr> <td> {{item}} </td>                    <!-- else use normal table data -->
+
+               <td> {{dict[item]}} </td>
+
+          </tr>
+
+        {%endif%}
+
       {%endfor%}
+
     </table>
+
   </body>
+
 </html>
