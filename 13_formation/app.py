@@ -15,7 +15,9 @@ def home():
 
 @app.route("/auth")                      
 def authenticate():
-	return render_template("authenticate.html", username = request.args['username'])
+	print(request)
+	print(request.headers)
+	return render_template("authenticate.html", username = request.args['username'], method = request.method)
 
 
 if __name__ == "__main__":
