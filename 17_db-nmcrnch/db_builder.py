@@ -1,6 +1,4 @@
 
-
-
 import sqlite3   #enable control of an sqlite database
 import csv       #facilitates CSV I/O
 
