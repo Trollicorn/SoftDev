@@ -1,9 +1,15 @@
-
+'''
+Team Mohammed
+Mohammed Jamil, Mohammed Uddin
+SoftDev1 pd 6
+K17 -- Average
+2018-10-09
+'''
 import sqlite3   #enable control of an sqlite database
 import csv       #facilitates CSV I/O
 
 
-DB_FILE="discobandit.db"
+DB_FILE="studentdata.db"
 
 db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
 c = db.cursor()               #facilitate db ops
@@ -11,26 +17,17 @@ c = db.cursor()               #facilitate db ops
 #==========================================================
 #INSERT YOUR POPULATE CODE IN THIS ZONE
 
-command = "CREATE TABLE peeps(name TEXT, age INTEGER, id INTEGER PRIMARY KEY);"        #build SQL stmt, save as string
-c.execute(command)
-
-with open('peeps.csv') as csvfile:
-    reader = csv.DictReader(csvfile)
-    for row in reader:
-        #insert into tbl values(name,age,id);
-        pop = "INSERT INTO peeps VALUES('{0}',{1},{2});".format(row['name'],row['age'],row['id'])
-        c.execute(pop)
-
-command = "CREATE TABLE courses(code TEXT, mark INTEGER, id INTEGER);"        #build SQL stmt, save as string (same as for peeps)
-c.execute(command)
-
-with open('courses.csv') as csvfile:
-    reader = csv.DictReader(csvfile)
-    for row in reader:
-        #insert into tbl values(courses,mark,id);
-        pop = "INSERT INTO courses VALUES('{0}',{1},{2});".format(row['code'],row['mark'],row['id'])
-        c.execute(pop)
-
+def table_creator(name,filename,field0,field1,field2):
+    create_command="CREATE TABLE {0}({1} TEXT, {2} INTEGER, {3} INTEGER);".format(name,field0,field1,field2)#This sql command creates a table using the parameters given
+    c.execute(create_command)
+    with open(filename) as csvfile:
+        reader = csv.DictReader(csvfile)#The DictReader method turns each row into dictionray with fieldnames as keys 
+        for row in reader:
+            #The following command will insert the csv data into the table
+            insert = "INSERT INTO {0} VALUES('{1}',{2},{3});".format(name,row[field0],row[field1],row[field2])
+            c.execute(insert)
+table_creator('peeps','peeps.csv','name','age','id')#this creates the table from the peeps csv
+table_creator('courses','courses.csv','code','mark','id')#this creates the table from the courses csv
 #==========================================================
 
 db.commit() #save changes
