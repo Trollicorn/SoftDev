@@ -15,9 +15,11 @@ api0 = "https://www.alphavantage.co/query?"
 stuff0 = "function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD"
 apikey0 = "&apikey=22RF5B4FAHT5XUQH"
 url1 = "https://xkcd.com/42/info.0.json" #remove comic number for current
+url2 = "https://api.adviceslip.com/advice"
 
 @app.route("/")
 def show():
+
     #cancer
     url0 = api0 + stuff0 + apikey0
     book = request.urlopen(url0)
@@ -35,15 +37,19 @@ def show():
     #fun
     book = request.urlopen(url1)
     stuff = book.read()
-    things1= json.loads(stuff)
+    things1 = json.loads(stuff)
     num = things1['num']
     title = things1['title']
     img = things1['img']
     alt = things1['alt']
 
+    #weird
+    book = request.urlopen(url2)
+    stuff = book.read()
+    things2 = json.loads(stuff)
+    advice = things2['slip']['advice']
     return render_template("demo.html",frm=frm,fr=fr,to=to,t=t,rate=rate,time=time,zone=zone,
-                            num=num,title=title,img=img,alt=alt)
-
+                            num=num,title=title,img=img,alt=alt,advice=advice)
 
 if __name__== "__main__":
     app.debug = True
